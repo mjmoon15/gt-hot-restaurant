@@ -59,7 +59,6 @@
             </div>
             <div class="card-body">
               <ul id="waitList" class="list-group">
-                <li class="list-group-item mt-4"></li>
               </ul>
             </div>
           </div>
@@ -81,12 +80,23 @@
     <script>
       $(document).ready(() => {
         $.ajax({
-          url: "http://localhost:3000/api/tables",
+          url: "/api/tables",
           type: "GET",
           success: (result) => {
             result.forEach((reservation, index) => {
               var generatedListItems = `<li class="list-group-item mt-4"><h2>Table #${index + 1}</h2><hr><h2>ID: ${reservation.uniqueId}</h2><h2>Name: ${reservation.name}</h2><h2>Email: ${reservation.email}</h2><h2>Phone: ${reservation.phoneNumber}</h2></li>`;
               $("#tableList").append(generatedListItems);
+            });
+          },
+        });
+
+        $.ajax({
+          url: "/api/waitlist",
+          type: "GET",
+          success: (result) => {
+            result.forEach((reservation, index) => {
+              var generatedListItems = `<li class="list-group-item mt-4"><h2>Table #${index + 1}</h2><hr><h2>ID: ${reservation.uniqueId}</h2><h2>Name: ${reservation.name}</h2><h2>Email: ${reservation.email}</h2><h2>Phone: ${reservation.phoneNumber}</h2></li>`;
+              $("#waitList").append(generatedListItems);
             });
           },
         });
