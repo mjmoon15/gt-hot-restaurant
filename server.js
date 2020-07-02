@@ -2,6 +2,7 @@
       // =============================================================
       var express = require("express");
       var path = require("path");
+      // var cors = require('cors');
 
       // Sets up the Express App
       // =============================================================
@@ -9,6 +10,7 @@
       var PORT = process.env.PORT || 3000;
 
       // Sets up the Express app to handle data parsing
+      // app.use(cors());
       app.use(express.urlencoded({ extended: true }));
       app.use(express.json());
 
@@ -16,16 +18,16 @@
       // =============================================================
       var tables = [
         {
-          routeName: "reservation",
           name: "Yoda",
-          groupSize: 6,
-          
+          phoneNumber: "888-8888",
+          email: "yo@duh.com",
+          uniqueId: 8
         },
         {
-          routeName: "reservation",
-          name: "Darth Maul",
-          groupSize: 3,
-          
+          name: "Darth Paul",
+          phoneNumber: "222-2222",
+          email: "dp@darkside.com",
+          uniqueId: 2
         },
       
       ];
@@ -72,7 +74,18 @@
      
 
       // // Create New Characters - takes in JSON input
-      // app.post("/api/characters", function (req, res) {
+      app.post("/api/reserve", function (req, res) {
+        // req.body hosts is equal to the JSON post sent from the user
+        // This works because of our body parsing middleware
+        var newReservation = req.body;
+
+        reserve.push(newReservation);
+
+        res.json(reserve);
+      });
+
+       // // Create New Characters - takes in JSON input
+      //  app.post("/api/characters", function (req, res) {
       //   // req.body hosts is equal to the JSON post sent from the user
       //   // This works because of our body parsing middleware
       //   var newCharacter = req.body;
