@@ -2,6 +2,7 @@
 // =============================================================
 var express = require("express");
 var path = require("path");
+// var cors = require('cors');
 
 // Sets up the Express App
 // =============================================================
@@ -9,32 +10,37 @@ var app = express();
 var PORT = process.env.PORT || 3000;
 
 // Sets up the Express app to handle data parsing
+// app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // =============================================================
-var tables = [
+const reservations = [
   {
-    routeName: "reservation",
     name: "Yoda",
-    groupSize: 6,
+    phoneNumber: "888-8888",
+    email: "yo@duh.com",
+    uniqueId: 8,
   },
   {
-    routeName: "reservation",
-    name: "Darth Maul",
-    groupSize: 3,
+    name: "Darth Paul",
+    phoneNumber: "222-2222",
+    email: "dp@darkside.com",
+    uniqueId: 2,
   },
 ];
-var reserve = [
+const waitlist = [
   {
-    routeName: "waitlist",
-    name: "steve",
-    groupSize: 5,
+    name: "Robert Paulson",
+    phoneNumber: "777-7777",
+    email: "rip@notdeadyet.com",
+    uniqueId: 7,
   },
   {
-    routeName: "waitlist",
-    name: "tim",
-    groupSize: 10,
+    name: "Penny Lane",
+    phoneNumber: "555-5555",
+    email: "penny@inmymind.com",
+    uniqueId: 5,
   },
 ];
 
@@ -53,30 +59,34 @@ app.get("/reserve", function (req, res) {
   res.sendFile(path.join(__dirname, "reserve.html"));
 });
 
-//API calls for reserve and table objects
+//API calls for getting information
+
 app.get("/api/tables", function (req, res) {
-  return res.json(tables);
+  return res.json(reservations);
 });
+
+app.get("/api/waitlist", function (req, res) {
+  return res.json(waitlist);
+});
+
+//for making reservations
 app.get("/api/reserve", function (req, res) {
   return res.json(reserve);
 });
 
+// // Create New Characters - takes in JSON input
 app.post("/api/reserve", function (req, res) {
-    // req.body hosts is equal to the JSON post sent from the user
-    // This works because of our body parsing middleware
-    var newReservation = req.body;
-    // Using a RegEx Pattern to remove spaces from newCharacter
-    // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
-    newReservation.routeName = newReservation.name
-      .replace(/\s+/g, "")
-      .toLowerCase();
-    console.log(newReservation);
-    characters.push(newReservation);
-    res.json(newReservation);
-  });
+  // req.body hosts is equal to the JSON post sent from the user
+  // This works because of our body parsing middleware
+  var newReservation = req.body;
 
-// // Create New Reservations - takes in JSON input
-// app.post("/api/reserve", function (req, res) {
+  reserve.push(newReservation);
+
+  res.json(reserve);
+});
+
+// // Create New Characters - takes in JSON input
+//  app.post("/api/characters", function (req, res) {
 //   // req.body hosts is equal to the JSON post sent from the user
 //   // This works because of our body parsing middleware
 //   var newCharacter = req.body;
